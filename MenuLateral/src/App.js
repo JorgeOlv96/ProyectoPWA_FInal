@@ -1,22 +1,27 @@
-import './App.scss';
-import 'boxicons/css/boxicons.min.css';
-import { BrowserRouter, Routes, Route } from 'react-router-dom';
-import AppLayout from './components/layout/AppLayout';
-import Blank from './pages/Blank';
+import { useState } from 'react';
+import appFirebase from './credenciales';
+import { getAuth, onAuthStateChanged } from "firebase/auth";
+import Login from './components/Login';
+import Home from './components/Home';
+
+const auth = getAuth(appFirebase);
 
 function App() {
+
+    const [user, setUser] = useState(null);
+
+    onAuthStateChanged(auth, (userFirebase) => {
+        if (userFirebase) {
+            setUser(userFirebase);
+        } else {
+            setUser(null);
+        }
+    });
+
     return (
-        <BrowserRouter>
-            <Routes>
-                <Route path='/' element={<AppLayout />}>
-                    <Route index element={<Blank />} />
-                    <Route path='/started' element={<Blank />} />
-                    <Route path='/calendar' element={<Blank />} />
-                    <Route path='/user' element={<Blank />} />
-                    <Route path='/order' element={<Blank />} />
-                </Route>
-            </Routes>
-        </BrowserRouter>
+        <div>
+            {user ? <Home user={user} /> : <Login />}
+        </div>
     );
 }
 
