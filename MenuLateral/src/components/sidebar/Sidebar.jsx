@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
+import { NavLink } from "react-router-dom"; 
 import './sidebar.scss';
 
 const sidebarNavItems = [
@@ -16,7 +17,7 @@ const sidebarNavItems = [
         section: 'user'
     },
     {
-        display: 'Gestor de ingresos y egresos',
+        display: 'Gestor',
         icon: <i className='bx bx-receipt'></i>,
         to: '/order',
         section: 'order'
@@ -45,34 +46,48 @@ const Sidebar = () => {
         setActiveIndex(curPath.length === 0 ? 0 : activeItem);
     }, [location]);
 
-    return <div className='sidebar'>
-   <div className="sidebar__logo">
-    <img src="https://expreso.blob.core.windows.net.optimalcdn.com/images/2023/03/27/natanaelcano-89d35fda-focus-0-0-1300-865.jpg" alt="Foto de perfil" style={{ maxWidth: '100%', height: 'auto', width: '100px', height: '100px', borderRadius: '50%', objectFit: 'cover', overflow: 'hidden' }} />
-</div>
-        <div ref={sidebarRef} className="sidebar__menu">
-            <div
-                ref={indicatorRef}
-                className="sidebar__menu__indicator"
-                style={{
-                    transform: `translateX(-50%) translateY(${activeIndex * stepHeight}px)`
-                }}
-            ></div>
-            {
-                sidebarNavItems.map((item, index) => (
-                    <Link to={item.to} key={index}>
-                        <div className={`sidebar__menu__item ${activeIndex === index ? 'active' : ''}`}>
-                            <div className="sidebar__menu__item__icon">
-                                {item.icon}
-                            </div>
-                            <div className="sidebar__menu__item__text">
-                                {item.display}
-                            </div>
-                        </div>
-                    </Link>
-                ))
-            }
+    return (
+      <div className="sidebar">
+        <div className="sidebar__logo">
+          <img
+            src="https://expreso.blob.core.windows.net.optimalcdn.com/images/2023/03/27/natanaelcano-89d35fda-focus-0-0-1300-865.jpg"
+            alt="Foto de perfil"
+            style={{
+              maxWidth: "100%",
+              height: "auto",
+              width: "100px",
+              height: "100px",
+              borderRadius: "50%",
+              objectFit: "cover",
+              overflow: "hidden",
+            }}
+          />
         </div>
-    </div>;
+        <div ref={sidebarRef} className="sidebar__menu">
+          <div
+            ref={indicatorRef}
+            className="sidebar__menu__indicator"
+            style={{
+              transform: `translateX(-50%) translateY(${
+                activeIndex * stepHeight
+              }px)`,
+            }}
+          ></div>
+          {sidebarNavItems.map((item, index) => (
+            <Link to={item.to} key={index} style={{ textDecoration: "none" }}>
+              <div
+                className={`sidebar__menu__item ${
+                  activeIndex === index ? "active" : ""
+                }`}
+              >
+                <div className="sidebar__menu__item__icon">{item.icon}</div>
+                <div className="sidebar__menu__item__text">{item.display}</div>
+              </div>
+            </Link>
+          ))}
+        </div>
+      </div>
+    );
 };
 
 export default Sidebar;

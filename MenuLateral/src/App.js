@@ -3,6 +3,7 @@ import appFirebase from './credenciales';
 import { getAuth, onAuthStateChanged } from "firebase/auth";
 import Login from './components/Login';
 import Home from './components/Home';
+import AppLayout from './components/layout/AppLayout';
 
 const auth = getAuth(appFirebase);
 
@@ -18,11 +19,7 @@ function App() {
         }
     });
 
-    return (
-        <div>
-            {user ? <Home user={user} /> : <Login />}
-        </div>
-    );
+    return <div>{user ? <AppLayout /> : <Login />}</div>;
 }
 
 export default App;
