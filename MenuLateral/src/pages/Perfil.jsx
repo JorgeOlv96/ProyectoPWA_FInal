@@ -21,18 +21,15 @@ export const Perfil = () => {
     const auth = getAuth();
     const database = getDatabase();
 
-    // Observador de cambios de autenticación
     const unsubscribe = onAuthStateChanged(auth, (user) => {
       if (user) {
         const userRef = ref(database, `usuarios/${user.uid}`);
 
-        // Observador de cambios en los datos del usuario
         onValue(userRef, (snapshot) => {
           const userData = snapshot.val();
           setPerfil(userData);
         });
       } else {
-        // Manejar caso de usuario no autenticado
       }
     });
 
