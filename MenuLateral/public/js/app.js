@@ -1,4 +1,4 @@
-
+/* 
 if ('serviceWorker' in navigator) {
     window.addEventListener('load', function() {
       navigator.serviceWorker.register('/sw.js').then(function(registration) {
@@ -8,8 +8,8 @@ if ('serviceWorker' in navigator) {
       });
     });
   }
-  
-
+   */
+/* 
   const isOnline = () => {
     if (navigator.onLine) {
         alert('¡Estás con conexion!');
@@ -21,4 +21,4 @@ if ('serviceWorker' in navigator) {
 window.addEventListener('online', isOnline);
 window.addEventListener('offline', isOnline);
 
-isOnline();
+isOnline(); */

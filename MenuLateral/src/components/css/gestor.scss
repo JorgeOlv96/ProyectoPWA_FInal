@@ -1,0 +1,206 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@300&display=swap');
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Roboto', sans-serif;
+}
+
+body {
+    background-color: #F6E4D7;
+}
+
+.container {
+    display: flex;
+    width: 100%;
+}
+
+.container-grafica {
+    display: flex;
+    flex-direction: column;
+    width: 70%;
+    height: 100vh;
+    justify-content: center;
+}
+
+.container-controls {
+    display: flex;
+    flex-direction: column;
+    width: 30%;
+    padding: 20px;
+}
+
+.first-div {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    height: 15vh;
+    align-items: center;
+    border-radius: 30px;
+    background-color: #fff;
+    -webkit-border-radius: 30px;
+    -moz-border-radius: 30px;
+    -ms-border-radius: 30px;
+       width: 100%;
+    -o-border-radius: 30px;
+}
+
+.text-ing {
+    font-size: 16px;
+    color: gray;
+    margin-bottom: 15px;
+}
+
+.text-pre {
+    font-size: 25px;
+}
+
+.container-right {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.second-div {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    border-radius: 30px;
+    background-color: #fff;
+    width: 100%;
+     height: 15vh;
+    -webkit-border-radius: 30px;
+    -moz-border-radius: 30px;
+    -ms-border-radius: 30px;
+    -o-border-radius: 30px;
+}
+
+.button-ingresar {
+    background-color: #FFC297;
+    color: #fff;
+    border: none;
+    border-radius: 10px;
+    padding: 10px 20px;
+    margin-top: 20px;
+    cursor: pointer;
+    width: 80%;
+    display: flex;
+    justify-content: center;
+    margin-bottom: 50px;
+
+}
+
+
+/* Estilos para las modales */
+.react-modal {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: white;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  padding: 40px;
+  border-radius: 30px;
+
+  -webkit-border-radius: 30px;
+  -moz-border-radius: 30px;
+  -ms-border-radius: 30px;
+  -o-border-radius: 30px;
+}
+
+
+.react-modal-content {
+  width: 600px; 
+  height: auto;
+  overflow: auto; 
+    display: flex;
+  flex-direction: column;
+}
+
+.react-modal-content3 {
+  width: 300px; 
+  height: auto;
+  overflow: auto; 
+  display: flex;
+  flex-direction: column;
+}
+.modal-input {
+    margin-bottom: 20px;
+    padding: 20px;
+    border-radius: 10px;
+    border: #ccc 1px solid;
+}
+
+/* Estilos para el fondo de las modales */
+.react-modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+  z-index: 1000;
+}
+
+
+.text-ings {
+    font-size: 25px;
+    font-weight: 900;
+    margin-bottom: 15px;
+}
+
+.btn-i {
+    margin-right: 30px;
+}
+
+.buttons {
+    display: flex;
+}
+
+.button-guardar-modal {
+    background-color: #FFC297;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    padding: 10px 20px;
+    margin-top: 20px;
+    cursor: pointer;
+    width: 120px;
+    display: flex;
+    justify-content: center;
+    margin-bottom: 50px;
+    -webkit-border-radius: 5px;
+    -moz-border-radius: 5px;
+    -ms-border-radius: 5px;
+    -o-border-radius: 5px;
+}
+
+.button-cancelar-modal {
+    background-color: #fff;
+    color: #FFC297;
+    border: none;
+    border-radius: 5px;
+    padding: 10px 20px;
+    margin-top: 20px;
+    border: #FFC297 1px solid;
+    cursor: pointer;
+    width: 120px;
+    display: flex;
+    justify-content: center;
+    margin-bottom: 50px;
+    -webkit-border-radius: 5px;
+    -moz-border-radius: 5px;
+    -ms-border-radius: 5px;
+    -o-border-radius: 5px;
+}
+
+.input-monto {
+    width: 30%;
+}
+
+.input-desc {
+    height: 10vh;
+}
