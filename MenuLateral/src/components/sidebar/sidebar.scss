@@ -53,4 +53,15 @@
             transition: 0.3s ease-in-out;
         }
     }
+
+    .sidebar__menu {
+        display: flex;
+        flex-direction: column;
+        height: 100%;
+
+        .sidebar__logout {
+            margin-top: auto; // Esto empujará el botón de logout hacia la parte inferior del contenedor
+        }
+    }
+
 }
