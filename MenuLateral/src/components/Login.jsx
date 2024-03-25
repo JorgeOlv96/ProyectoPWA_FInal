@@ -1,5 +1,4 @@
-import React from 'react'
-import { useState } from 'react';
+import React, { useState } from 'react';
 import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
 import CssBaseline from '@mui/material/CssBaseline';
@@ -11,38 +10,47 @@ import Grid from '@mui/material/Grid';
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Typography from '@mui/material/Typography';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
-import appFirebase from '../credenciales';
 import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword } from 'firebase/auth';
+import { getDatabase, ref, set } from 'firebase/database'; // Importar set de Firebase Realtime Database
+import appFirebase from '../credenciales';
 
 const auth = getAuth(appFirebase);
+const database = getDatabase(appFirebase);
 
-
-// TODO remove, this demo shouldn't need to reset the theme.
 const defaultTheme = createTheme();
 
 export default function Login() {
   const [signin, setSignin] = useState(false);
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [nombre, setNombre] = useState('');
+  const [apellido, setApellido] = useState('');
+  const [carreraOcupacion, setCarreraOcupacion] = useState('');
+  const [telefono, setTelefono] = useState('');
 
-  const Autentication = async (event) => {
+  const handleAuthentication = async (event) => {
     event.preventDefault();
-    const correo = event.target.email.value;
-    const contraseña = event.target.password.value;
-
-    console.log(correo, contraseña);
-    if (signin) {
-      try {
-        const userCredential = await createUserWithEmailAndPassword(auth, correo, contraseña);
+    try {
+      if (signin) {
+        const userCredential = await createUserWithEmailAndPassword(auth, email, password);
         console.log(userCredential);
-      } catch (error) {
-        console.log(error);
-      }
-    } else {
-      try {
-        const userCredential = await signInWithEmailAndPassword(auth, correo, contraseña);
+        // Escribir datos del usuario en la base de datos
+        await set(ref(database, `usuarios/${userCredential.user.uid}`), {
+          correo: email,
+          nombre: nombre,
+          apellido: apellido,
+          carreraOcupacion: carreraOcupacion,
+          telefono: telefono
+        });
+        // Manejar registro exitoso aquí
+      } else {
+        const userCredential = await signInWithEmailAndPassword(auth, email, password);
         console.log(userCredential);
-      } catch (error) {
-        console.log(error);
+        // Manejar inicio de sesión exitoso aquí
       }
+    } catch (error) {
+      console.log(error);
+      // Manejar errores de autenticación aquí (mostrar mensaje de error, etc.)
     }
   }
 
@@ -67,7 +75,7 @@ export default function Login() {
             <Typography component="h1" variant="h5">
               {signin ? "Registrarse" : "Iniciar sesión"}
             </Typography>
-            <Box component="form" noValidate onSubmit={Autentication} sx={{ mt: 1 }}>
+            <Box component="form" noValidate onSubmit={handleAuthentication} sx={{ mt: 1 }}>
               <TextField
                 margin="normal"
                 required
@@ -77,17 +85,69 @@ export default function Login() {
                 name="email"
                 autoComplete="email"
                 autoFocus
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
               />
               <TextField
                 margin="normal"
-                required
+                required                    
                 fullWidth
                 name="password"
                 label="Contraseña"
                 type="password"
                 id="password"
                 autoComplete="current-password"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
               />
+              {signin && (
+                <>
+                  <TextField
+                    margin="normal"
+                    required
+                    fullWidth
+                    id="nombre"
+                    label="Nombre"
+                    name="nombre"
+                    autoComplete="off"
+                    value={nombre}
+                    onChange={(e) => setNombre(e.target.value)}
+                  />
+                  <TextField
+                    margin="normal"
+                    required
+                    fullWidth
+                    id="apellido"
+                    label="Apellido"
+                    name="apellido"
+                    autoComplete="off"
+                    value={apellido}
+                    onChange={(e) => setApellido(e.target.value)}
+                  />
+                  <TextField
+                    margin="normal"
+                    required
+                    fullWidth
+                    id="carreraOcupacion"
+                    label="Carrera u ocupación"
+                    name="carreraOcupacion"
+                    autoComplete="off"
+                    value={carreraOcupacion}
+                    onChange={(e) => setCarreraOcupacion(e.target.value)}
+                  />
+                  <TextField
+                    margin="normal"
+                    required
+                    fullWidth
+                    id="telefono"
+                    label="Teléfono"
+                    name="telefono"
+                    autoComplete="off"
+                    value={telefono}
+                    onChange={(e) => setTelefono(e.target.value)}
+                  />
+                </>
+              )}
               <Button type="submit" fullWidth variant="contained" sx={{ mt: 3, mb: 2 }}>
                 {signin ? "Registrarse" : "Iniciar sesión"}
               </Button>
@@ -103,5 +163,5 @@ export default function Login() {
         </Grid>
       </Grid>
     </ThemeProvider>
-  )
+  );
 }
