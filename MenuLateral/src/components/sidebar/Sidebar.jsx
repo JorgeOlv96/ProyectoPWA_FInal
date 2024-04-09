@@ -1,31 +1,35 @@
-import { useEffect, useRef, useState } from 'react';
-import { Link, useLocation } from 'react-router-dom';
-import appFirebase from '../../credenciales'; 
-import { getAuth, signOut } from 'firebase/auth'; // Importa la función signOut
-import './sidebar.scss';
+import { useEffect, useRef, useState } from "react";
+import { Link, useLocation } from "react-router-dom";
+import appFirebase from "../../credenciales";
+import { getAuth, signOut } from "firebase/auth";
+import "./sidebar.scss";
+import HomeIcon from "@mui/icons-material/Home";
+import PersonIcon from "@mui/icons-material/Person";
+import ReceiptIcon from "@mui/icons-material/Receipt";
+import LogoutIcon from "@mui/icons-material/Logout";
 
-const auth = getAuth(appFirebase); 
+const auth = getAuth(appFirebase);
 
 const sidebarNavItems = [
   {
-    display: 'Inicio',
-    icon: <i className='bx bx-home'></i>,
-    to: '/',
-    section: ''
+    display: "Inicio",
+    icon: <HomeIcon />,
+    to: "/",
+    section: "",
   },
   {
-    display: 'Perfil',
-    icon: <i className='bx bx-user'></i>,
-    to: '/user',
-    section: 'user'
+    display: "Perfil",
+    icon: <PersonIcon />,
+    to: "/user",
+    section: "user",
   },
   {
-    display: 'Gestor',
-    icon: <i className='bx bx-receipt'></i>,
-    to: '/order',
-    section: 'order'
+    display: "Gestor",
+    icon: <ReceiptIcon />,
+    to: "/order",
+    section: "order",
   },
-]
+];
 
 const Sidebar = () => {
   const [activeIndex, setActiveIndex] = useState(0);
@@ -36,16 +40,19 @@ const Sidebar = () => {
 
   useEffect(() => {
     setTimeout(() => {
-      const sidebarItem = sidebarRef.current.querySelector('.sidebar__menu__item');
+      const sidebarItem = sidebarRef.current.querySelector(
+        ".sidebar__menu__item"
+      );
       indicatorRef.current.style.height = `${sidebarItem.clientHeight}px`;
       setStepHeight(sidebarItem.clientHeight);
     }, 50);
   }, []);
 
-  // change active index
   useEffect(() => {
-    const curPath = window.location.pathname.split('/')[1];
-    const activeItem = sidebarNavItems.findIndex(item => item.section === curPath);
+    const curPath = window.location.pathname.split("/")[1];
+    const activeItem = sidebarNavItems.findIndex(
+      (item) => item.section === curPath
+    );
     setActiveIndex(curPath.length === 0 ? 0 : activeItem);
   }, [location]);
 
@@ -70,23 +77,37 @@ const Sidebar = () => {
         <div
           ref={indicatorRef}
           className="sidebar__menu__indicator"
-          style={{transform: `translateX(-50%) translateY(${activeIndex * stepHeight}px)`,}}>
-        </div>
-
+          style={{
+            transform: `translateX(-50%) translateY(${
+              activeIndex * stepHeight
+            }px)`,
+          }}
+        ></div>
         {sidebarNavItems.map((item, index) => (
           <Link to={item.to} key={index} style={{ textDecoration: "none" }}>
-            <div className={`sidebar__menu__item ${activeIndex === index ? "active" : ""}`}>
+            <div
+              className={`sidebar__menu__item ${
+                activeIndex === index ? "active" : ""
+              }`}
+            >
               <div className="sidebar__menu__item__icon">{item.icon}</div>
               <div className="sidebar__menu__item__text">{item.display}</div>
             </div>
           </Link>
         ))}
-
-        <div className="sidebar__menu__item active" onClick={() => signOut(auth)}>
+        <div
+          className="sidebar__menu__item active cerrar-sesion"
+          style={{ cursor: "pointer", marginTop: 5}}
+          onClick={() => signOut(auth)}
+        >
           <div className="sidebar__menu__item__icon">
-            <i className='bx bx-log-out'></i>
+            <LogoutIcon />
           </div>
-          <div className="sidebar__menu__item__text">Cerrar sesión</div>
+          <div
+            className="sidebar__menu__item__text"
+          >
+            Cerrar sesión
+          </div>
         </div>
       </div>
     </div>

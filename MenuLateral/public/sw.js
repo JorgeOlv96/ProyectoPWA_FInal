@@ -54,35 +54,23 @@ self.addEventListener('install', event => {
     event.waitUntil(Promise.all([cahePromise, caheInmutable]))
 })
 
-self.addEventListener('fetch', event => {
-    //Cache with network fallback
-    const respuesta = caches.match(event.request)
-        .then(response => {
-            if (response) return response
-            //Si no existe el archivo lo descarga
-            return fetch(event.request)
-                .then(newResponse => {
+self.addEventListener("fetch", (event) => {
+  const respuesta = fetch(event.request)
+    .then((res) => {
+      if (!res) {
+        return caches.match("/pages/Offline.html");
+      }
+      
+      caches.open(CACHE_DYNAMIC).then((cache) => {
+        cache.put(event.request, res);
+        limpiarCache(CACHE_DYNAMIC, CACHE_DYNAMIC_LIMIT);
+      });
 
-                    caches.open(CACHE_DYNAMIC)
-                        .then(cache => {
-                            cache.put(event.request, newResponse)
-                            limpiarCache(CACHE_DYNAMIC, CACHE_DYNAMIC_LIMIT)
-                        })
-                    return newResponse.clone()
-                })
-                //Manejo del error al no poder resolverse ambas promesas
-                .catch(err => {
-                    if (event.request.headers.get('accept').includes('text/html')) {
-                        return caches.match('/pages/offline.html')
-                    }
+      return res.clone();
+    })
+    .catch((err) => {
+        return caches.match("/pages/Offline.html");
+    });
 
-                })
-        })
-    event.respondWith(respuesta)
-})
-
-self.addEventListener('message', event => {
-    if (event.data === 'actualizar') {
-        self.skipWaiting();
-    }
+  event.respondWith(respuesta);
 });

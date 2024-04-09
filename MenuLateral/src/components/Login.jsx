@@ -49,7 +49,13 @@ export default function Login() {
         // Manejar inicio de sesión exitoso aquí
       }
     } catch (error) {
-      console.log(error);
+    if (error.code === "auth/network-request-failed") {
+      // Mostrar la página offline
+      //window.location.href = "/pages/Offline.html";
+    } else {
+      console.error("Error durante el inicio de sesión:", error);
+    }
+     // window.location.href = '/pages/Offline.html';
       // Manejar errores de autenticación aquí (mostrar mensaje de error, etc.)
     }
   }

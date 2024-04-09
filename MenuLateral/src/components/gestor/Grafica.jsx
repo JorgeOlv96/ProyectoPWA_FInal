@@ -126,7 +126,7 @@ const Grafica = () => {
       >
         Gráfico de los ingresos y egresos del mes actual
       </h2>
-      <canvas id="myChart" width="400" height="300"></canvas>
+      <canvas id="myChart" width="auto" height="300"></canvas>
     </div>
   );
 };
