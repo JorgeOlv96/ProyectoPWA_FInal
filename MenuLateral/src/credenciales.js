@@ -2,6 +2,9 @@
 import { initializeApp } from "firebase/app";
 import { getAuth } from "firebase/auth";
 import { getDatabase } from "firebase/database";
+import { getAnalytics } from "firebase/analytics";
+import { getMessaging, getToken } from "firebase/messaging";
+
 // TODO: Add SDKs for Firebase products that you want to use
 // https://firebase.google.com/docs/web/setup#available-libraries
 
@@ -12,9 +15,12 @@ const firebaseConfig = {
   projectId: "pwa-service-998cd",
   storageBucket: "pwa-service-998cd.appspot.com",
   messagingSenderId: "128611623155",
-  appId: "1:128611623155:web:27cf1a8e901389a769d786"
+  appId: "1:128611623155:web:27cf1a8e901389a769d786",
+  measurementId: "G-TXZWJZ0LYJ"
 };
 
 // Initialize Firebase
 const appFirebase = initializeApp(firebaseConfig);
+const analytics = getAnalytics(appFirebase);
 export default appFirebase;
+

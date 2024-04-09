@@ -1,8 +1,7 @@
 importScripts('https://cdn.jsdelivr.net/npm/pouchdb@8.0.1/dist/pouchdb.min.js')
 importScripts('js/sw-db.js')
 importScripts('js/sw-utils.js')
-
-//importScripts('./firebase-messaging-sw.js')
+importScripts('firebase-messaging-sw.js')
 
 //Crear las variables de cache
 const CACHE_DYNAMIC = 'dynamic-v1' //Para los archivos que se van a descargar
@@ -45,14 +44,15 @@ self.addEventListener('install', event => {
     const caheInmutable = caches.open(CACHE_INMUTABLE).then(cache => {
 
         return cache.addAll([
-
-            'https://fonts.googleapis.com/css2?family=Inter:wght@300&family=Roboto:wght@100&display=swap'
+            'https://fonts.googleapis.com/css2?family=Inter:wght@300&family=Roboto:wght@100&display=swap',
+            'https://cdn.jsdelivr.net/npm/pouchdb@8.0.1/dist/pouchdb.min.js',
+            'https://www.gstatic.com/firebasejs/10.9.0/firebase-app-compat.js',
+            'https://www.gstatic.com/firebasejs/10.9.0/firebase-messaging-compat.js',
 
         ])
     })
     event.waitUntil(Promise.all([cahePromise, caheInmutable]))
 })
-
 
 self.addEventListener("fetch", (event) => {
   const respuesta = fetch(event.request)
@@ -60,7 +60,7 @@ self.addEventListener("fetch", (event) => {
       if (!res) {
         return caches.match("/pages/Offline.html");
       }
-
+      
       caches.open(CACHE_DYNAMIC).then((cache) => {
         cache.put(event.request, res);
         limpiarCache(CACHE_DYNAMIC, CACHE_DYNAMIC_LIMIT);
