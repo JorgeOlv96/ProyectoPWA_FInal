@@ -6,8 +6,8 @@ import { useEffect, useState } from 'react';
 import Bienvenido from '../assets/Bienvenido.png'; // Importa la imagen desde la carpeta assets
 
 const Blank = () => {
-    const getTokenNotification = async () => {
-        const token = await getToken(messaging, {
+    const getTokenNotification = async () => { 
+        const token = await getToken(messaging, { 
             vapidKey: 'BBkqwhkByDNpsDvUe8PBVtTN0osy9M4DLPWKU0ZKa8uthZ84DUR0dwD2wpNN_ddB3YfUzeIXZ61oT_1kxT0O4Cw'
         }).catch((err) => console.log('No se pudo obtener el token: ', err));
 
